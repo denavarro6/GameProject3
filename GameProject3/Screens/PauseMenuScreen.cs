@@ -17,6 +17,7 @@ namespace GameArchitectureExample.Screens
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
             MenuEntries.Add(resumeGameMenuEntry);
+            MenuEntries.Add(restartGameMenuEntry);
             MenuEntries.Add(quitGameMenuEntry);
         }
 
@@ -33,9 +34,11 @@ namespace GameArchitectureExample.Screens
         private void RestartGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             const string message = "Are you sure you want to restart this game?";
-            var confirmQuitMessageBox = new MessageBoxScreen(message);
+            var confirmRestartMessageBox = new MessageBoxScreen(message);
 
-            confirmQuitMessageBox.Accepted += ConfirmRestartMessageBoxAccepted;
+            confirmRestartMessageBox.Accepted += ConfirmRestartMessageBoxAccepted;
+
+            ScreenManager.AddScreen(confirmRestartMessageBox, ControllingPlayer);
         }
 
         // This uses the loading screen to transition from the game back to the main menu screen.
@@ -46,7 +49,7 @@ namespace GameArchitectureExample.Screens
 
         private void ConfirmRestartMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
-            
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreen(), new CutSceneScreen());
         }
     }
 }
