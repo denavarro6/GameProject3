@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using GameArchitectureExample.StateManagement;
 
@@ -19,8 +22,6 @@ namespace GameArchitectureExample.Screens
         private readonly MenuEntry _musicMenuEntry;
         private readonly MenuEntry _musicMenuEntryIncrease;
         private readonly MenuEntry _musicMenuEntryDecrease;
-        private readonly InputAction _menuLeft;
-        private readonly InputAction _menuRight;
         //private readonly MenuEntry _frobnicateMenuEntry;
         //private readonly MenuEntry _elfMenuEntry;
 
@@ -37,8 +38,6 @@ namespace GameArchitectureExample.Screens
             _soundMenuEntryDecrease = new MenuEntry(string.Empty);
             _musicMenuEntryIncrease = new MenuEntry(string.Empty);
             _musicMenuEntryDecrease = new MenuEntry(string.Empty);
-            //_frobnicateMenuEntry = new MenuEntry(string.Empty);
-            //_elfMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
@@ -107,6 +106,8 @@ namespace GameArchitectureExample.Screens
             _musicMenuEntryIncrease.Text = $"Increase Music Volume";
             _musicMenuEntry.Text = $"Music Volume: {_currentMusic}";
             _musicMenuEntryDecrease.Text = $"Decrease Music Volume";
+            MediaPlayer.Volume = _currentMusic / 100;
+            SoundEffect.MasterVolume = _currentSound / 100;
             //_frobnicateMenuEntry.Text = $"Frobnicate: {(_frobnicate ? "on" : "off")}";
             //_elfMenuEntry.Text = $"elf: {_elf.ToString()}";
         }
@@ -117,34 +118,7 @@ namespace GameArchitectureExample.Screens
 
             SetMenuEntryText();
         }
-        /*public override void HandleInput(GameTime gameTime, InputState input)
-        {
-            PlayerIndex playerIndex;
-
-            if (_menuRight.Occurred(input, ControllingPlayer, out playerIndex))
-            {
-
-                if (_currentSound >= 0 && _currentSound <= 100 && _currentSoundSelected)
-                    _currentSound++;
-                if (_currentMusic >= 0 && _currentMusic <= 100 && _currentMusicSelected)
-                    _currentMusic++;
-
-                
-            }
-
-            if (_menuLeft.Occurred(input, ControllingPlayer, out playerIndex))
-            {
-               // _selectedEntry++;
-
-                if (_currentMusic >= 0 && _currentMusic <= 100 && _currentMusicSelected)
-                    _currentMusic--;
-            }
-
-            /*if (_menuSelect.Occurred(input, ControllingPlayer, out playerIndex))
-                OnSelectEntry(_selectedEntry, playerIndex);
-            else if (_menuCancel.Occurred(input, ControllingPlayer, out playerIndex))
-                OnCancel(playerIndex);
-        }*/
+        
         private void MusicMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             //KeyboardState keyboard = Keyboard.GetState();

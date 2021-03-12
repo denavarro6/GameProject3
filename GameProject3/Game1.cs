@@ -54,7 +54,7 @@ namespace GameArchitectureExample
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.TransparentBlack);
             base.Draw(gameTime);    // The real drawing happens inside the ScreenManager component
         }
     }

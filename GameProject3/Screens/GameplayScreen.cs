@@ -21,6 +21,8 @@ namespace GameArchitectureExample.Screens
 
         private readonly Random _random = new Random();
 
+        Texture2D _background;
+
         private float _pauseAlpha;
         private readonly InputAction _pauseAction;
 
@@ -41,6 +43,7 @@ namespace GameArchitectureExample.Screens
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
+            _background = _content.Load<Texture2D>("corona_rt");
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -158,6 +161,7 @@ namespace GameArchitectureExample.Screens
 
             spriteBatch.Begin();
 
+            ScreenManager.SpriteBatch.Draw(_background, Vector2.Zero, Color.White);
             spriteBatch.DrawString(_gameFont, "// TODO", _playerPosition, Color.Green);
             spriteBatch.DrawString(_gameFont, "Insert Gameplay Here",
                                    _enemyPosition, Color.DarkRed);
