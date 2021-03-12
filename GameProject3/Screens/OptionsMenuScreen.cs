@@ -61,12 +61,12 @@ namespace GameArchitectureExample.Screens
             //MenuEntries.Add(_frobnicateMenuEntry);
            //MenuEntries.Add(_elfMenuEntry);
             MenuEntries.Add(back);
-            _menuLeft = new InputAction(
+            /*_menuLeft = new InputAction(
                 new[] { Buttons.DPadLeft, Buttons.LeftThumbstickLeft },
                 new[] { Keys.Left }, true);
             _menuRight = new InputAction(
                 new[] { Buttons.DPadRight, Buttons.LeftThumbstickRight },
-                new[] { Keys.Right }, true);
+                new[] { Keys.Right }, true);*/
         }
 
         private void MusicMenuEntryDSelected(object sender, PlayerIndexEventArgs e)
