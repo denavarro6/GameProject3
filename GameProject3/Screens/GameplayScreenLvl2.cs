@@ -12,17 +12,41 @@ using GameProject3.Collisions;
 
 namespace GameProject3.Screens
 {
+    public enum Direction
+    {
+        Down = 0,
+        Right = 1,
+        Up = 2,
+        Left = 3,
+    }
     // This screen implements the actual game logic. It is just a
     // placeholder to get the idea across: you'll probably want to
     // put some more interesting gameplay in here!
-    public class GameplayScreen : GameScreen
+    public class GameplayScreenLvl2 : GameScreen
     {
+        public Game1 game;
+        private double directionTimer;
         private ContentManager _content;
         private SpriteFont _gameFont;
         private World world;
-       // private int height = ScreenManager.GraphicsDevice.Viewport.Hieght;
+        private SoundEffect _hitBed;
+        private SoundEffect _hitBurger;
+        // private int height = ScreenManager.GraphicsDevice.Viewport.Hieght;
         private Vector2 _playerPosition = new Vector2(100, 500);
-        private Vector2 _enemyPosition = new Vector2(100, 100);
+        private Vector2 _enemyPosition1 = new Vector2(140, 450);
+        private Vector2 _enemyPosition2 = new Vector2(250, 450);
+        private Vector2 _enemyPosition3 = new Vector2(400, 450);
+        private Vector2 _enemyPosition4 = new Vector2(600,450);
+        private bool _enemy1Land = true;
+        private bool _enemy2Land = true;
+        private bool _enemy3Land = true;
+        private bool _enemy4Land = true;
+
+        private BoundingRectangle _enemy1Bounds = new BoundingRectangle(new Vector2(140, 450), 60, 60);
+        private BoundingRectangle _enemy2Bounds = new BoundingRectangle(new Vector2(250, 450), 60, 60);
+        private BoundingRectangle _enemy3Bounds = new BoundingRectangle(new Vector2(400, 450), 60, 60);
+        private BoundingRectangle _enemy4Bounds = new BoundingRectangle(new Vector2(600, 450), 60, 60);
+        //private BoundingRectangle[] _enemyBounds = new BoundingRectangle[] { new BoundingRectangle(new Vector2(140, 450),) }
         private PlayerSprite _player;
         private Texture2D _bed;
         private Texture2D _player1;
@@ -30,8 +54,9 @@ namespace GameProject3.Screens
         private SpriteBatch spriteBatch;
         private double animationTimer;
         private bool flipped;
-        private BoundingRectangle _playerbounds = new BoundingRectangle(new Vector2(100,500), 46, 50);
-        private BoundingRectangle _bedBounds = new BoundingRectangle(new Vector2(800 - 66, 480 - 12),(float)56.5,(float)26.75);
+        private BoundingRectangle _playerbounds = new BoundingRectangle(new Vector2(100, 500), 46, 50);
+        private Direction Direction;
+        private BoundingRectangle _bedBounds = new BoundingRectangle(new Vector2(800 - 66, 480 - 12), (float)56.5, (float)26.75);
 
         private short animationFrame = 0;
 
@@ -45,7 +70,7 @@ namespace GameProject3.Screens
         private float _pauseAlpha;
         private readonly InputAction _pauseAction;
 
-        public GameplayScreen()
+        public GameplayScreenLvl2()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -62,9 +87,11 @@ namespace GameProject3.Screens
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
-            _background = _content.Load<Texture2D>("corona_rt");
-            _backgroundMusic = _content.Load<Song>("TownTheme");
+            _background = _content.Load<Texture2D>("redeclipse_bk");
+            _backgroundMusic = _content.Load<Song>("Ending");
             _bed = _content.Load<Texture2D>("bed");
+            _hitBed = _content.Load<SoundEffect>("HitBed");
+            _hitBurger = _content.Load<SoundEffect>("HitBurger");
             world = new World();
             world.Gravity = Vector2.Zero;
 
@@ -132,8 +159,8 @@ namespace GameProject3.Screens
                 // Apply some random jitter to make the enemy move around.
                 const float randomization = 10;
 
-                _enemyPosition.X += (float)(_random.NextDouble() - 0.5) * randomization;
-                _enemyPosition.Y += (float)(_random.NextDouble() - 0.5) * randomization;
+                //_enemyPosition.X += (float)(_random.NextDouble() - 0.5) * randomization;
+                //_enemyPosition.Y += (float)(_random.NextDouble() - 0.5) * randomization;
 
                 // Apply a stabilizing force to stop the enemy moving off the screen.
                 //var targetPosition = new Vector2(
@@ -141,14 +168,86 @@ namespace GameProject3.Screens
                 //200);
 
                 // _enemyPosition = Vector2.Lerp(_enemyPosition, targetPosition, 0.05f);
-                _enemyPosition = new Vector2(150, 0);
+
+
+
+                //Move the mouse in direction it is moving
+                if (_enemyPosition1.Y < 500 && _enemyPosition1.Y > 100 && _enemy1Land)
+                {
+                    _enemyPosition1.Y = 0;
+                    _enemy1Bounds.Y = 0;
+                    _enemy1Land = false;
+                }
+                else if (_enemyPosition1.Y >= 480)
+                {
+                    _enemy1Land = true;
+                }
+                else
+                {
+                    _enemyPosition1.Y += 8;
+                    _enemy1Bounds.Y = _enemyPosition1.Y;
+                }
+                
+                
+                if (_enemyPosition2.Y < 500 && _enemyPosition2.Y > 100 && _enemy2Land)
+                {
+                    _enemyPosition2.Y = 0;
+                    _enemy2Bounds.Y = 0;
+                    _enemy2Land = false;
+                }
+                else if (_enemyPosition2.Y >= 480)
+                {
+                    _enemy2Land = true;
+                }
+                else
+                {
+                    _enemyPosition2.Y += 4;
+                    _enemy2Bounds.Y = _enemyPosition2.Y;
+
+                }
+
+                if (_enemyPosition3.Y < 500 && _enemyPosition3.Y > 100 && _enemy3Land)
+                {
+                    _enemyPosition3.Y = 0;
+
+                    _enemy3Bounds.Y = 0;
+                    _enemy3Land = false;
+                }
+                else if (_enemyPosition3.Y >= 480)
+                {
+                    _enemy3Land = true;
+                }
+                else
+                {
+                    _enemyPosition3.Y += 2;
+                    _enemy3Bounds.Y = _enemyPosition3.Y;
+
+                }
+
+                if (_enemyPosition4.Y < 500 && _enemyPosition4.Y > 100 && _enemy4Land)
+                {
+                    _enemyPosition4.Y = 0;
+                    _enemy4Bounds.Y = 0;
+                    _enemy4Land = false;
+                }
+                else if (_enemyPosition4.Y >= 480)
+                {
+                    _enemy4Land = true;
+                }
+                else
+                {
+                    _enemyPosition4.Y += 6;
+                    _enemy4Bounds.Y = _enemyPosition4.Y;
+                }
+                //_enem.bounds = new BoundingRectangle(Position + new Vector2(0, 8), 40, 16);
+
 
                 // This game isn't very fun! You could probably improve
                 // it by inserting something more interesting in this space :-)
 
                 _player.Update(gameTime);
             }
-            
+
         }
 
         // Unlike the Update method, this will only be called when the gameplay screen is active.
@@ -241,13 +340,21 @@ namespace GameProject3.Screens
                 if (_playerPosition.Y > ScreenManager.GraphicsDevice.Viewport.Height) _playerPosition.Y = ScreenManager.GraphicsDevice.Viewport.Height;
                 if (_playerPosition.X < 64) _playerPosition.X = 64;
                 if (_playerPosition.X > ScreenManager.GraphicsDevice.Viewport.Width) _playerPosition.X = ScreenManager.GraphicsDevice.Viewport.Width;
-                _playerbounds.X = _playerPosition.X-46;
+                _playerbounds.X = _playerPosition.X - 46;
                 _playerbounds.Y = _playerPosition.Y;
                 if (_playerbounds.CollidesWith(_bedBounds))
                 {
                     MediaPlayer.Stop();
-
+                    _hitBed.Play();
+                    Thread.Sleep(5000);
                     ExitScreen();
+                    //ExitScreen();
+                }
+                if (_playerbounds.CollidesWith(_enemy2Bounds) || _playerbounds.CollidesWith(_enemy1Bounds) || _playerbounds.CollidesWith(_enemy3Bounds) || _playerbounds.CollidesWith(_enemy4Bounds))
+                {
+                    _hitBurger.Play();
+                    _playerPosition.X = 100;
+                    _playerPosition.Y = 500;
                 }
 
                 var thumbstick = gamePadState.ThumbSticks.Left;
@@ -291,9 +398,20 @@ namespace GameProject3.Screens
             //Update animation frme
 
             SpriteEffects spriteEffects = (flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            spriteBatch.Draw(_enemy, _enemyPosition, null, Color.White, 0, new Vector2(64, 64), .5f, spriteEffects, 0);
-            spriteBatch.DrawString(_gameFont, "You've  been  awake  for  too  long.\n Go  and  get  some  rest.",new Vector2(ScreenManager.GraphicsDevice.Viewport.Width-250, 32),Color.White, 0,new Vector2(64,64),.5f,SpriteEffects.None,0);
-            spriteBatch.Draw(_bed, new Vector2(ScreenManager.GraphicsDevice.Viewport.Width-66,ScreenManager.GraphicsDevice.Viewport.Height-12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
+            
+            spriteBatch.Draw(_enemy, _enemyPosition1, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
+
+            spriteBatch.Draw(_enemy, _enemyPosition2, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
+
+            spriteBatch.Draw(_enemy, _enemyPosition3, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
+
+            spriteBatch.Draw(_enemy, _enemyPosition4, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
+
+
+         
+
+            spriteBatch.DrawString(_gameFont, "How  did  we  get  here?\n Wait,  Isn't  that...\nAnyways,  you  really  need  to  sleep.", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - 300, 32), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
+            spriteBatch.Draw(_bed, new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - 66, ScreenManager.GraphicsDevice.Viewport.Height - 12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
 
             var source = new Rectangle(animationFrame * 46, 150, 46, 50);
             //spriteBatch.Draw(_player1, _playerPosition, Color.White);

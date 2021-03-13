@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     // The loading screen coordinates transitions between the menu system and the
     // game itself. Normally one screen will transition off at the same time as

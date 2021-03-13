@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ambiente.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ambiente.png
+
 #begin background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -61,6 +73,12 @@
 /processorParam:TextureFormat=Color
 /build:corona_rt.png
 
+#begin Ending.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Ending.mp3
+
 #begin gamefont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -92,6 +110,18 @@
 /processorParam:TextureFormat=Color
 /build:hamburger.png
 
+#begin HitBed.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:HitBed.wav
+
+#begin HitBurger.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:HitBurger.wav
+
 #begin liftoff_of_smap.mp4
 /importer:H264Importer
 /processor:VideoProcessor
@@ -104,6 +134,30 @@
 /processorParam:TextureFormat=Compressed
 /build:menufont.spritefont
 
+#begin player-spritemap.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:player-spritemap.png
+
+#begin redeclipse_bk.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:redeclipse_bk.png
+
 #begin splash.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -115,6 +169,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:splash.png
+
+#begin TitleScreen.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:TitleScreen.mp3
+
+#begin TownTheme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:TownTheme.mp3
 
 #begin whirl1.png
 /importer:TextureImporter

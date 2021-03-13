@@ -1,11 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     // The main menu screen is the first thing displayed when the game starts up.
     public class MainMenuScreen : MenuScreen
     {
+
+
+        ContentManager _content;
+        Song _menuMusic;
+
+        bool _isPlaying = false;
         public MainMenuScreen() : base("Main Menu")
         {
             var playGameMenuEntry = new MenuEntry("Play Game");
@@ -21,9 +30,26 @@ namespace GameArchitectureExample.Screens
             MenuEntries.Add(exitMenuEntry);
         }
 
+       /* public override void Activate()
+        {
+            if (_content == null)
+            {
+                _content = new ContentManager(ScreenManager.Game.Services, "Content");
+            }
+
+            _menuMusic = _content.Load<Song>("TitleScreen");
+        }
+
+        public override void Deactivate()
+        {
+            MediaPlayer.Pause();
+            _isPlaying = false;
+        }*/
+
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreen(), new CutSceneScreen());
+            MediaPlayer.Stop();
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreenLvl2(), new GameplayScreen());
         }
 
         private void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e)

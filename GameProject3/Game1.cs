@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using GameArchitectureExample.Screens;
-using GameArchitectureExample.StateManagement;
+using GameProject3.Screens;
+using GameProject3.StateManagement;
 
-namespace GameArchitectureExample
+
+namespace GameProject3
 {
     // Sample showing how to manage different game states, with transitions
     // between menu screens, a loading screen, the game itself, and a pause

@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     public class CutSceneScreen : GameScreen
     {

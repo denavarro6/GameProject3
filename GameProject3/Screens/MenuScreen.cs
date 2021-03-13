@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     // Base class for screens that contain a menu of options. The user can
     // move up and down to select an entry, or cancel to back out of the screen.
@@ -14,6 +17,13 @@ namespace GameArchitectureExample.Screens
         private readonly List<MenuEntry> _menuEntries = new List<MenuEntry>();
         private int _selectedEntry;
         private readonly string _menuTitle;
+
+        ContentManager _content;
+        Song _menuMusic;
+
+        bool _isPlaying = false;
+
+        bool _isInMenu;
 
         private readonly InputAction _menuUp;
         private readonly InputAction _menuDown;
@@ -42,6 +52,24 @@ namespace GameArchitectureExample.Screens
             _menuCancel = new InputAction(
                 new[] { Buttons.B, Buttons.Back },
                 new[] { Keys.Back, Keys.Escape }, true);
+        }
+
+        public override void Activate()
+        {
+            if (_content == null)
+            {
+                _content = new ContentManager(ScreenManager.Game.Services, "Content");
+            }
+
+            _menuMusic = _content.Load<Song>("TitleScreen");
+            _isInMenu = true;
+        }
+
+        public override void Deactivate()
+        {
+            MediaPlayer.Stop();
+            _isInMenu = false;
+            _isPlaying = false;
         }
 
         // Responds to user input, changing the selected entry and accepting or cancelling the menu.
@@ -74,11 +102,19 @@ namespace GameArchitectureExample.Screens
                 OnSelectEntry(_selectedEntry, playerIndex);
             else if (_menuCancel.Occurred(input, ControllingPlayer, out playerIndex))
                 OnCancel(playerIndex);
+
+            if (!_isPlaying && _isInMenu)
+            {
+                MediaPlayer.Play(_menuMusic);
+                MediaPlayer.IsRepeating = true;
+                _isPlaying = true;
+            }
         }
 
         protected virtual void OnSelectEntry(int entryIndex, PlayerIndex playerIndex)
         {
             _menuEntries[entryIndex].OnSelectEntry(playerIndex);
+            _isInMenu = false;
         }
 
         protected virtual void OnCancel(PlayerIndex playerIndex)

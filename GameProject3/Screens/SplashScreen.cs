@@ -4,15 +4,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
 
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     class SplashScreen : GameScreen
     {
         ContentManager _content;
         Texture2D _background;
+        SpriteFont _menufont;
         TimeSpan _displayTime;
         public override void Activate()
         {
@@ -20,7 +21,8 @@ namespace GameArchitectureExample.Screens
 
             if (_content == null) _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            _background = _content.Load<Texture2D>("splash");
+            _background = _content.Load<Texture2D>("whirl1");
+            _menufont = _content.Load<SpriteFont>("menufont");
             _displayTime = TimeSpan.FromSeconds(2);
         }
 
@@ -35,7 +37,7 @@ namespace GameArchitectureExample.Screens
         public override void Draw(GameTime gameTime)
         {
             ScreenManager.SpriteBatch.Begin();
-            ScreenManager.SpriteBatch.Draw(_background, Vector2.Zero, Color.White);
+            ScreenManager.SpriteBatch.DrawString(_menufont,"Time  to  Go  to  Bed", new Vector2(275, 200), Color.White);
             ScreenManager.SpriteBatch.End();
         }
     }

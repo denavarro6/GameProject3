@@ -2,9 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     // The background screen sits behind all the other menu screens.
     // It draws a background image that remains fixed in place regardless

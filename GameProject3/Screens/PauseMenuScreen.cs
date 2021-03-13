@@ -1,6 +1,6 @@
-﻿using GameArchitectureExample.StateManagement;
+﻿using GameProject3.StateManagement;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     // The pause menu comes up over the top of the game,
     // giving the player options to resume or quit.
@@ -49,7 +49,7 @@ namespace GameArchitectureExample.Screens
 
         private void ConfirmRestartMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreen(), new CutSceneScreen());
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreenLvl2(), new GameplayScreen());
         }
     }
 }

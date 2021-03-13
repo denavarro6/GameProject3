@@ -16,9 +16,19 @@ and relased under the MIT License
 
 Content/bed.png - created by SapphireDreamer on OpenGameArt.Org (https://opengameart.org/content/8-bit-bed), released under public domain
 
-Content/corona_rt.png - created by Ulukai on OpenGameArt.Org (https://opengameart.org/content/ulukais-space-skyboxes), are
+Content/corona_rt.png and Content/redeclipse_bk.png- created by Ulukai on OpenGameArt.Org (https://opengameart.org/content/ulukais-space-skyboxes), are
 licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit
 http://creativecommons.org/licenses/by-sa/3.0/
 
 Content/whirl1.png - created by n4 on OpenGameArt.Org (https://opengameart.org/content/whirlwind-for-effects), released under public domain
+
+Content/Ending.wav - created by SubspaceAudio on OpenGameArt.Org (https://opengameart.org/content/5-chiptunes-action), released under public domain
+
+Content/TownTheme.mp3 - created by cynicmusic on OpenGameArt.Org (https://opengameart.org/content/town-theme-rpg), released under public domain
+
+Content/TitleScreen.wav - created by mrpoly on OpenGameArt.Org (https://opengameart.org/content/menu-music), released under public domain
+
+Content/ambiente.png - created by musdasch on OpenGameArt.Org (https://opengameart.org/content/medivel-stone-floor), released under public domain
+
+Content/HitBed.wav and Content/HitBurger - created by me using Bfxr
 

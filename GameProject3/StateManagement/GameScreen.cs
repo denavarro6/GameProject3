@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace GameArchitectureExample.StateManagement
+
+namespace GameProject3.StateManagement
 {
     /// <summary>
     /// A screen is a single layer of game content that has

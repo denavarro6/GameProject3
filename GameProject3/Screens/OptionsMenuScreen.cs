@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
-using GameArchitectureExample.StateManagement;
+using GameProject3.StateManagement;
 
-namespace GameArchitectureExample.Screens
+namespace GameProject3.Screens
 {
     // The options screen is brought up over the top of the main menu
     // screen, and gives the user a chance to configure the game
@@ -106,8 +106,8 @@ namespace GameArchitectureExample.Screens
             _musicMenuEntryIncrease.Text = $"Increase Music Volume";
             _musicMenuEntry.Text = $"Music Volume: {_currentMusic}";
             _musicMenuEntryDecrease.Text = $"Decrease Music Volume";
-            MediaPlayer.Volume = _currentMusic / 100;
-            SoundEffect.MasterVolume = _currentSound / 100;
+            MediaPlayer.Volume = (float)((float)_currentMusic / 100);
+            SoundEffect.MasterVolume = (float)_currentSound / 100;
             //_frobnicateMenuEntry.Text = $"Frobnicate: {(_frobnicate ? "on" : "off")}";
             //_elfMenuEntry.Text = $"elf: {_elf.ToString()}";
         }
