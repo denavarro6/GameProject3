@@ -49,7 +49,7 @@ namespace GameProject3.Screens
         private void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             MediaPlayer.Stop();
-            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreenLvl2(), new GameplayScreen());
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new YouWin(), new GameplayScreenLvl2(), new GameplayScreen());
         }
 
         private void OptionsMenuEntrySelected(object sender, PlayerIndexEventArgs e)

@@ -346,7 +346,7 @@ namespace GameProject3.Screens
                 {
                     MediaPlayer.Stop();
                     _hitBed.Play();
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                     ExitScreen();
                     //ExitScreen();
                 }
