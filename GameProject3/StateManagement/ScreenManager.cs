@@ -146,7 +146,10 @@ namespace GameProject3.StateManagement
             screen.IsExiting = false;
 
             // If we have a graphics device, tell the screen to load content
-            if (_isInitialized) screen.Activate();
+            if (_isInitialized) {
+                screen.Activate();
+                screen.Initialize();
+            }
 
             _screens.Add(screen);
         }

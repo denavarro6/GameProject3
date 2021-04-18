@@ -25,7 +25,6 @@ namespace GameProject3.Screens
     public class GameplayScreenLvl2 : GameScreen
     {
         public Game1 game;
-        private double directionTimer;
         private ContentManager _content;
         private SpriteFont _gameFont;
         private World world;
@@ -33,19 +32,19 @@ namespace GameProject3.Screens
         private SoundEffect _hitBurger;
         // private int height = ScreenManager.GraphicsDevice.Viewport.Hieght;
         private Vector2 _playerPosition = new Vector2(100, 500);
-        private Vector2 _enemyPosition1 = new Vector2(140, 450);
-        private Vector2 _enemyPosition2 = new Vector2(250, 450);
-        private Vector2 _enemyPosition3 = new Vector2(400, 450);
-        private Vector2 _enemyPosition4 = new Vector2(600,450);
+        private Vector2 _enemyPosition1 = new Vector2(2820, 450);
+        private Vector2 _enemyPosition2 = new Vector2(450, 450);
+        private Vector2 _enemyPosition3 = new Vector2(1000, 450);
+        private Vector2 _enemyPosition4 = new Vector2(1600,450);
         private bool _enemy1Land = true;
         private bool _enemy2Land = true;
         private bool _enemy3Land = true;
         private bool _enemy4Land = true;
 
-        private BoundingRectangle _enemy1Bounds = new BoundingRectangle(new Vector2(140, 450), 60, 60);
-        private BoundingRectangle _enemy2Bounds = new BoundingRectangle(new Vector2(250, 450), 60, 60);
-        private BoundingRectangle _enemy3Bounds = new BoundingRectangle(new Vector2(400, 450), 60, 60);
-        private BoundingRectangle _enemy4Bounds = new BoundingRectangle(new Vector2(600, 450), 60, 60);
+        private BoundingRectangle _enemy1Bounds = new BoundingRectangle(new Vector2(2830, 450), 45, 45);
+        private BoundingRectangle _enemy2Bounds = new BoundingRectangle(new Vector2(460, 450), 45, 45);
+        private BoundingRectangle _enemy3Bounds = new BoundingRectangle(new Vector2(1010, 450), 45, 45);
+        private BoundingRectangle _enemy4Bounds = new BoundingRectangle(new Vector2(1610, 450), 45, 60);
         //private BoundingRectangle[] _enemyBounds = new BoundingRectangle[] { new BoundingRectangle(new Vector2(140, 450),) }
         private PlayerSprite _player;
         private Texture2D _bed;
@@ -54,15 +53,16 @@ namespace GameProject3.Screens
         private SpriteBatch spriteBatch;
         private double animationTimer;
         private bool flipped;
-        private BoundingRectangle _playerbounds = new BoundingRectangle(new Vector2(100, 500), 46, 50);
+        private BoundingRectangle _playerbounds = new BoundingRectangle(new Vector2(100, 500), 40, 50);
         private Direction Direction;
-        private BoundingRectangle _bedBounds = new BoundingRectangle(new Vector2(800 - 66, 480 - 12), (float)56.5, (float)26.75);
+        private BoundingRectangle _bedBounds = new BoundingRectangle(new Vector2(3774-13, 480 - 12-14), (float)56.5, (float)26.75);
 
         private short animationFrame = 0;
 
         private readonly Random _random = new Random();
 
         Texture2D _background;
+        Texture2D _hitbox;
         Song _backgroundMusic;
 
         bool _isPlaying = false;
@@ -85,15 +85,18 @@ namespace GameProject3.Screens
         {
             if (_content == null)
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
-
             _gameFont = _content.Load<SpriteFont>("gamefont");
-            _background = _content.Load<Texture2D>("redeclipse_bk");
+            _background = _content.Load<Texture2D>("Background-3");
             _backgroundMusic = _content.Load<Song>("Ending");
             _bed = _content.Load<Texture2D>("bed");
             _hitBed = _content.Load<SoundEffect>("HitBed");
             _hitBurger = _content.Load<SoundEffect>("HitBurger");
+            _hitbox = _content.Load<Texture2D>("redeclipse_bk");
             world = new World();
             world.Gravity = Vector2.Zero;
+
+
+            
 
             var top = 0;
             var bottom = ScreenManager.GraphicsDevice.Viewport.Height;
@@ -130,6 +133,12 @@ namespace GameProject3.Screens
             ScreenManager.Game.ResetElapsedTime();
         }
 
+        public override void Initialize()
+        {
+            RainParticleSystem rain = new RainParticleSystem(this, new Rectangle(100, 20, 500, 100),ScreenManager.GraphicsDevice, _content);
+            Components.Add(rain);
+            base.Initialize();
+        }
 
         public override void Deactivate()
         {
@@ -185,7 +194,7 @@ namespace GameProject3.Screens
                 else
                 {
                     _enemyPosition1.Y += 8;
-                    _enemy1Bounds.Y = _enemyPosition1.Y;
+                    _enemy1Bounds.Y = _enemyPosition1.Y+8;
                 }
                 
                 
@@ -202,7 +211,7 @@ namespace GameProject3.Screens
                 else
                 {
                     _enemyPosition2.Y += 4;
-                    _enemy2Bounds.Y = _enemyPosition2.Y;
+                    _enemy2Bounds.Y = _enemyPosition2.Y+8;
 
                 }
 
@@ -220,7 +229,7 @@ namespace GameProject3.Screens
                 else
                 {
                     _enemyPosition3.Y += 2;
-                    _enemy3Bounds.Y = _enemyPosition3.Y;
+                    _enemy3Bounds.Y = _enemyPosition3.Y+8;
 
                 }
 
@@ -237,7 +246,7 @@ namespace GameProject3.Screens
                 else
                 {
                     _enemyPosition4.Y += 6;
-                    _enemy4Bounds.Y = _enemyPosition4.Y;
+                    _enemy4Bounds.Y = _enemyPosition4.Y+8;
                 }
                 //_enem.bounds = new BoundingRectangle(Position + new Vector2(0, 8), 40, 16);
 
@@ -339,9 +348,9 @@ namespace GameProject3.Screens
                 if (_playerPosition.Y < 50) _playerPosition.Y = 50;
                 if (_playerPosition.Y > ScreenManager.GraphicsDevice.Viewport.Height) _playerPosition.Y = ScreenManager.GraphicsDevice.Viewport.Height;
                 if (_playerPosition.X < 64) _playerPosition.X = 64;
-                if (_playerPosition.X > ScreenManager.GraphicsDevice.Viewport.Width) _playerPosition.X = ScreenManager.GraphicsDevice.Viewport.Width;
-                _playerbounds.X = _playerPosition.X - 46;
-                _playerbounds.Y = _playerPosition.Y;
+                if (_playerPosition.X > 3810) _playerPosition.X = 3810;
+                _playerbounds.X = _playerPosition.X;
+                _playerbounds.Y = _playerPosition.Y - 64;
                 if (_playerbounds.CollidesWith(_bedBounds))
                 {
                     MediaPlayer.Stop();
@@ -382,10 +391,12 @@ namespace GameProject3.Screens
             // This game has a blue background. Why? Because!
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
-            // Our player and enemy are both actually just text strings.
-            //var spriteBatch = new SpriteBatch(ScreenManager.GraphicsDevice);
+            float playerX = MathHelper.Clamp(_playerPosition.X, 300, 3340);
+            float offsetX = 300 - playerX;
 
-            spriteBatch.Begin();
+            Matrix transform = Matrix.CreateTranslation(offsetX, 0, 0);
+
+            spriteBatch.Begin(transformMatrix: transform);
             spriteBatch.Draw(_background, Vector2.Zero, Color.White);
             //spriteBatch.DrawString(_gameFont, "// TODO", _playerPosition, Color.Green);
             //spriteBatch.DrawString(_gameFont, "Insert Gameplay Here",
@@ -400,24 +411,47 @@ namespace GameProject3.Screens
             SpriteEffects spriteEffects = (flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             
             spriteBatch.Draw(_enemy, _enemyPosition1, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
-
+            var rect = new Rectangle((int)(_enemy1Bounds.X),
+                                            (int)(_enemy1Bounds.Y),
+                                            (int)(_enemy1Bounds.Width), (int)(_enemy1Bounds.Height));
+            //spriteBatch.Draw(_hitbox, rect, Color.White);
+            var rect2 = new Rectangle((int)(_enemy2Bounds.X),
+                                           (int)(_enemy2Bounds.Y),
+                                           (int)(_enemy2Bounds.Width), (int)(_enemy2Bounds.Height));
+            //spriteBatch.Draw(_hitbox, rect2, Color.White);
             spriteBatch.Draw(_enemy, _enemyPosition2, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
-
+            
+            
             spriteBatch.Draw(_enemy, _enemyPosition3, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
+            var rect3 = new Rectangle((int)(_enemy3Bounds.X),
+                                           (int)(_enemy3Bounds.Y),
+                                           (int)(_enemy3Bounds.Width), (int)(_enemy3Bounds.Height));
+            //spriteBatch.Draw(_hitbox, rect3, Color.White);
 
             spriteBatch.Draw(_enemy, _enemyPosition4, null, Color.White, 0, new Vector2(0, 0), .25f, spriteEffects, 0);
+            var rect4 = new Rectangle((int)(_enemy4Bounds.X),
+                                           (int)(_enemy4Bounds.Y),
+                                           (int)(_enemy4Bounds.Width), (int)(_enemy4Bounds.Height));
+            //spriteBatch.Draw(_hitbox, rect4, Color.White);
 
-
-         
-
-            spriteBatch.DrawString(_gameFont, "How  did  we  get  here?\n Wait,  Isn't  that...\nAnyways,  you  really  need  to  sleep.", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - 300, 32), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
-            spriteBatch.Draw(_bed, new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - 66, ScreenManager.GraphicsDevice.Viewport.Height - 12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
 
             var source = new Rectangle(animationFrame * 46, 150, 46, 50);
-            //spriteBatch.Draw(_player1, _playerPosition, Color.White);
-            spriteBatch.Draw(_player1, _playerPosition, source, Color.White, 0, new Vector2(64, 64), 1, spriteEffects, 0);
-            spriteBatch.End();
+            spriteBatch.Draw(_player1, _playerPosition, source, Color.White, 0, new Vector2(0, 64), 1, spriteEffects, 0);
+            var rect7 = new Rectangle((int)(_playerbounds.X),
+                                           (int)(_playerbounds.Y),
+                                           (int)(40), (int)(50));
+            //spriteBatch.Draw(_hitbox, rect7, Color.White);
 
+            spriteBatch.DrawString(_gameFont, "How  did  we  get  here?\nAnyways,  you  really  need  to  sleep.", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - 300, 32), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
+            spriteBatch.Draw(_bed, new Vector2(3774, ScreenManager.GraphicsDevice.Viewport.Height - 12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
+            
+            var rect8 = new Rectangle((int)(_bedBounds.X),
+                                           (int)(_bedBounds.Y),
+                                           (int)(56.5), (int)(26.75));
+            //spriteBatch.Draw(_player1, _playerPosition, Color.White);
+            //spriteBatch.Draw(_hitbox, rect8, Color.White);
+
+            spriteBatch.End();
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || _pauseAlpha > 0)
             {

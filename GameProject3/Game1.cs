@@ -43,7 +43,7 @@ namespace GameProject3
             base.Initialize();
         }
 
-        protected override void LoadContent() { }
+        protected override void LoadContent() { base.LoadContent(); }
 
         protected override void Update(GameTime gameTime)
         {

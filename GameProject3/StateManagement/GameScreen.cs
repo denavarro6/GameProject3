@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace GameProject3.StateManagement
@@ -10,7 +11,7 @@ namespace GameProject3.StateManagement
     /// with other layers to create complex menus or game
     /// experiences
     /// </summary>
-    public abstract class GameScreen
+    public abstract class GameScreen : Game
     {
         /// <summary>
         /// Indicates if this screen is a popup
@@ -106,6 +107,7 @@ namespace GameProject3.StateManagement
         /// </summary>
         public virtual void Unload() { }
 
+
         /// <summary>
         /// Updates the screen. Unlike HandleInput, this method is called regardless of whether the screen
         /// is active, hidden, or in the middle of a transition.
@@ -190,6 +192,11 @@ namespace GameProject3.StateManagement
                 ScreenManager.RemoveScreen(this);    // If the screen has a zero transition time, remove it immediately
             else
                 IsExiting = true;    // Otherwise flag that it should transition off and then exit.
+        }
+
+        public virtual void Initialize()
+        {
+            base.Initialize();
         }
     }
 }

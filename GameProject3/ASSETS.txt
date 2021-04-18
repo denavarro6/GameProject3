@@ -32,3 +32,6 @@ Content/ambiente.png - created by musdasch on OpenGameArt.Org (https://opengamea
 
 Content/HitBed.wav and Content/HitBurger - created by me using Bfxr
 
+Content/Background-3.jpeg - created by Rawdanitsuon OpenGameArt.Org (https://opengameart.org/content/space-backgrounds-7), released under public domain
+
+Content/drop.png, Content/circle.png, and Content/particle.png created by Nathan Bean and released into the public domain.

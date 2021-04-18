@@ -37,7 +37,7 @@ namespace GameProject3.Screens
         public override void Draw(GameTime gameTime)
         {
             ScreenManager.SpriteBatch.Begin();
-            ScreenManager.SpriteBatch.DrawString(_menufont,"Time  to  Go  to  Bed", new Vector2(275, 200), Color.White);
+            ScreenManager.SpriteBatch.DrawString(_menufont,"Insomnia", new Vector2(315, 200), Color.White, 0.0f,new Vector2(0,0),1.5f,SpriteEffects.None,0);
             ScreenManager.SpriteBatch.End();
         }
     }
