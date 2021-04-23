@@ -35,3 +35,8 @@ Content/HitBed.wav and Content/HitBurger - created by me using Bfxr
 Content/Background-3.jpeg - created by Rawdanitsuon OpenGameArt.Org (https://opengameart.org/content/space-backgrounds-7), released under public domain
 
 Content/drop.png, Content/circle.png, and Content/particle.png created by Nathan Bean and released into the public domain.
+
+Content/floor.jpeg, Content/floor2.0.jpeg - created by borjae on OpenGameArt.org (https://opengameart.org/content/medieval-floor), released Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by-sa/3.0/
+
+Content/footstep.wav - created by zapsplat on zapsplat.org (https://www.zapsplat.com/music/single-footstep-on-paving-stone-1/), released under their Standard License. To view a copy, visit https://www.zapsplat.com/license-type/standard-license/
