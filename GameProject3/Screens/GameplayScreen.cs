@@ -28,8 +28,11 @@ namespace GameProject3.Screens
         private Texture2D _player1;
         private Texture2D _enemy;
         private SpriteBatch spriteBatch;
+        private SoundEffect _hitBed;
+        private SoundEffect _walk;
         private double animationTimer;
         private bool flipped;
+        private bool flipped1;
         private BoundingRectangle _playerbounds = new BoundingRectangle(new Vector2(100,500), 46, 50);
         private BoundingRectangle _bedBounds = new BoundingRectangle(new Vector2(800 - 66, 480 - 12),(float)56.5,(float)26.75);
 
@@ -38,6 +41,7 @@ namespace GameProject3.Screens
         private readonly Random _random = new Random();
 
         Texture2D _background;
+        Texture2D _floor;
         Song _backgroundMusic;
 
         bool _isPlaying = false;
@@ -65,6 +69,9 @@ namespace GameProject3.Screens
             _background = _content.Load<Texture2D>("corona_rt");
             _backgroundMusic = _content.Load<Song>("TownTheme");
             _bed = _content.Load<Texture2D>("bed");
+            _hitBed = _content.Load<SoundEffect>("HitBed");
+            _walk = _content.Load<SoundEffect>("footstep");
+            _floor = _content.Load<Texture2D>("floor2.0");
             world = new World();
             world.Gravity = Vector2.Zero;
 
@@ -181,30 +188,34 @@ namespace GameProject3.Screens
                 // Otherwise move the player position.
                 var movement = Vector2.Zero;
 
-                if (keyboardState.IsKeyDown(Keys.Left))
+                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
                 {
                     if (animationTimer > .3)
                     {
                         animationFrame++;
+                        if (animationFrame == 1 || animationFrame == 3 || animationFrame == 6)
+                            _walk.Play();
                         if (animationFrame > 7) animationFrame = 0;
                         animationTimer -= .3;
                     }
                     movement.X--;
-
+                    
                     flipped = true;
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Right))
+                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
                 {
                     if (animationTimer > .3)
                     {
                         animationFrame++;
+                        if (animationFrame == 1 || animationFrame == 3 || animationFrame == 6)
+                            _walk.Play();
                         if (animationFrame > 7) animationFrame = 0;
                         animationTimer -= .3;
                     }
 
                     movement.X++;
-
+                    
                     flipped = false;
                 }
 
@@ -219,7 +230,7 @@ namespace GameProject3.Screens
                     movement.Y--;
                 }*/
 
-                if (keyboardState.IsKeyDown(Keys.Down))
+                if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
                 {
                     if (animationTimer > .3)
                     {
@@ -227,7 +238,7 @@ namespace GameProject3.Screens
                         if (animationFrame > 7) animationFrame = 0;
                         animationTimer -= .3;
                     }
-                    movement.Y++;
+                    //movement.Y++;
                 }
                 float t = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Vector2 acceleration = new Vector2(0, 2);
@@ -266,6 +277,12 @@ namespace GameProject3.Screens
                     MediaPlayer.IsRepeating = true;
                     _isPlaying = true;
                 }
+                if (_playerPosition.X > _enemyPosition.X)
+                    flipped1 = false;
+                else if(_playerPosition.X <= _enemyPosition.X)
+                {
+                    flipped1 = true;
+                }
                 _player.Update(gameTime);
             }
         }
@@ -291,10 +308,13 @@ namespace GameProject3.Screens
             //Update animation frme
 
             SpriteEffects spriteEffects = (flipped) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            spriteBatch.Draw(_enemy, _enemyPosition, null, Color.White, 0, new Vector2(64, 64), .5f, spriteEffects, 0);
-            spriteBatch.DrawString(_gameFont, "You've  been  awake  for  too  long.\n Go  and  get  some  rest.",new Vector2(ScreenManager.GraphicsDevice.Viewport.Width-250, 32),Color.White, 0,new Vector2(64,64),.5f,SpriteEffects.None,0);
-            spriteBatch.Draw(_bed, new Vector2(ScreenManager.GraphicsDevice.Viewport.Width-66,ScreenManager.GraphicsDevice.Viewport.Height-12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
+            SpriteEffects spriteEffects1 = (flipped1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
+            spriteBatch.Draw(_enemy, _enemyPosition, null, Color.White, 0, new Vector2(64, 64), .5f, spriteEffects1, 0);
+            spriteBatch.DrawString(_gameFont, "You've  been  awake  for  too  long.\n Go  and  get  some  rest.",new Vector2(ScreenManager.GraphicsDevice.Viewport.Width-250, 32),Color.White, 0,new Vector2(64,64),.5f,SpriteEffects.None,0);
+            spriteBatch.Draw(_floor, new Vector2(0, ScreenManager.GraphicsDevice.Viewport.Height - 20), Color.White);
+            spriteBatch.Draw(_bed, new Vector2(ScreenManager.GraphicsDevice.Viewport.Width-66,ScreenManager.GraphicsDevice.Viewport.Height-12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
+            
             var source = new Rectangle(animationFrame * 46, 150, 46, 50);
             //spriteBatch.Draw(_player1, _playerPosition, Color.White);
             spriteBatch.Draw(_player1, _playerPosition, source, Color.White, 0, new Vector2(64, 64), 1, spriteEffects, 0);

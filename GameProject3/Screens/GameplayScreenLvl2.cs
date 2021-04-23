@@ -53,6 +53,8 @@ namespace GameProject3.Screens
         private SpriteBatch spriteBatch;
         private double animationTimer;
         private bool flipped;
+        private SoundEffect _walk;
+        Texture2D _floor;
         private BoundingRectangle _playerbounds = new BoundingRectangle(new Vector2(100, 500), 40, 50);
         private Direction Direction;
         private BoundingRectangle _bedBounds = new BoundingRectangle(new Vector2(3774-13, 480 - 12-14), (float)56.5, (float)26.75);
@@ -92,6 +94,8 @@ namespace GameProject3.Screens
             _hitBed = _content.Load<SoundEffect>("HitBed");
             _hitBurger = _content.Load<SoundEffect>("HitBurger");
             _hitbox = _content.Load<Texture2D>("redeclipse_bk");
+
+            _floor = _content.Load<Texture2D>("floor2.0");
             world = new World();
             world.Gravity = Vector2.Zero;
 
@@ -114,7 +118,7 @@ namespace GameProject3.Screens
                 edge.BodyType = BodyType.Static;
             }
             var body = world.CreateRectangle(10, 20, 1, new Vector2(0, 480), 0, BodyType.Static);
-
+            _walk = _content.Load<SoundEffect>("footstep");
             _player1 = _content.Load<Texture2D>("player-spritemap");
             _enemy = _content.Load<Texture2D>("hamburger");
             _player = new PlayerSprite(body, _player1);
@@ -289,11 +293,13 @@ namespace GameProject3.Screens
                 // Otherwise move the player position.
                 var movement = Vector2.Zero;
 
-                if (keyboardState.IsKeyDown(Keys.Left))
+                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
                 {
                     if (animationTimer > .3)
                     {
                         animationFrame++;
+                        if (animationFrame == 1 || animationFrame == 3 || animationFrame == 6)
+                            _walk.Play();
                         if (animationFrame > 7) animationFrame = 0;
                         animationTimer -= .3;
                     }
@@ -302,11 +308,13 @@ namespace GameProject3.Screens
                     flipped = true;
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Right))
+                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
                 {
                     if (animationTimer > .3)
                     {
                         animationFrame++;
+                        if (animationFrame == 1 || animationFrame == 3 || animationFrame == 6)
+                            _walk.Play();
                         if (animationFrame > 7) animationFrame = 0;
                         animationTimer -= .3;
                     }
@@ -398,6 +406,7 @@ namespace GameProject3.Screens
 
             spriteBatch.Begin(transformMatrix: transform);
             spriteBatch.Draw(_background, Vector2.Zero, Color.White);
+            spriteBatch.Draw(_floor, new Vector2(0, ScreenManager.GraphicsDevice.Viewport.Height - 20), Color.White);
             //spriteBatch.DrawString(_gameFont, "// TODO", _playerPosition, Color.Green);
             //spriteBatch.DrawString(_gameFont, "Insert Gameplay Here",
             // _enemyPosition, Color.DarkRed);
@@ -443,6 +452,9 @@ namespace GameProject3.Screens
             //spriteBatch.Draw(_hitbox, rect7, Color.White);
 
             spriteBatch.DrawString(_gameFont, "How  did  we  get  here?\nAnyways,  you  really  need  to  sleep.", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - 300, 32), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(_gameFont, "BED  THIS  WAY  ----->", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width + 100, 150), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(_gameFont, "Almost  there...", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width + 1900, 100), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(_gameFont, "You  forgot  to  have  dinner,  didn't  you...", new Vector2(ScreenManager.GraphicsDevice.Viewport.Width + 900, 125), Color.CornflowerBlue, 0, new Vector2(64, 64), .5f, SpriteEffects.None, 0);
             spriteBatch.Draw(_bed, new Vector2(3774, ScreenManager.GraphicsDevice.Viewport.Height - 12), null, Color.White, 0, new Vector2(64, 64), .25f, SpriteEffects.None, 0);
             
             var rect8 = new Rectangle((int)(_bedBounds.X),

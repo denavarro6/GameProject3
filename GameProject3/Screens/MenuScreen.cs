@@ -179,8 +179,15 @@ namespace GameProject3.Screens
             var graphics = ScreenManager.GraphicsDevice;
             var spriteBatch = ScreenManager.SpriteBatch;
             var font = ScreenManager.Font;
-
+            var instructionsString = "Instructions In Game:";
+            var movementString = "Use  <-  and  -> (Arrow  Keys) or  W  and  D  to  move  left  and  right";
+            var pauseString = "Use  Esc  to  pause";
+            var selectionString = "Use  Enter  and  Arrow  Keys  to  select  option";
             spriteBatch.Begin();
+            spriteBatch.DrawString(font, instructionsString, new Vector2(graphics.Viewport.Width / 2, 375), Color.White, 0, font.MeasureString(instructionsString) / 2, .5f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, movementString, new Vector2(graphics.Viewport.Width /2 , 400), Color.White, 0, font.MeasureString(movementString) / 2, .5f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, pauseString, new Vector2(graphics.Viewport.Width / 2, 425), Color.White, 0, font.MeasureString(pauseString) / 2, .5f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, selectionString, new Vector2(graphics.Viewport.Width / 2, 450), Color.White, 0, font.MeasureString(selectionString) / 2, .5f, SpriteEffects.None, 0);
 
             for (int i = 0; i < _menuEntries.Count; i++)
             {
@@ -200,10 +207,11 @@ namespace GameProject3.Screens
             var titleColor = new Color(192, 192, 192) * TransitionAlpha;
             const float titleScale = 1.25f;
 
+            //spriteBatch.DrawString(font, "Use W and D to move left and right", titlePosition, titleColor, 0, titleOrigin, titleScale, SpriteEffects.None, 0);
             titlePosition.Y -= transitionOffset * 100;
-
             spriteBatch.DrawString(font, _menuTitle, titlePosition, titleColor,
                 0, titleOrigin, titleScale, SpriteEffects.None, 0);
+            
 
             spriteBatch.End();
         }
